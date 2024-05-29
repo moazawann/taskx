@@ -162,6 +162,8 @@ cd core
 python manage.py runmailer
 ```
 
+## Database Schema
+![Project Image](/Database%20_Schema.png)
 
 
 
