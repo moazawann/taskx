@@ -1,0 +1,24 @@
+
+{% if messages %}
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    {% for message in messages %}
+    <div id="liveToast{{ forloop.counter }}" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header card-header {% if 'warning' in message.tags %}bg-danger{% elif 'success' in message.tags %}bg-success{% endif %}">
+            <strong class="me-auto text-light">
+                <i class="fa-solid fa-comment fa-lg text-light"></i>
+                Notification
+            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body card-body">
+            {{ message }}
+            {% if 'warning' in message.tags %}
+            <i class="fa-solid fa-triangle-exclamation fa-fw fa-lg text-danger"></i>
+            {% elif 'success' in message.tags %}
+            <i class="fa-solid fa-circle-check fa-fw fa-lg text-success"></i>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

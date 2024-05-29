@@ -1,0 +1,74 @@
+{% extends 'accounts/base.html' %}
+
+{% block start %}
+
+<div class="card-body py-3 px-md-5">
+
+   <form method="POST">
+      {% csrf_token %}
+
+      <h3 class="fw-bold ls-tight text-center">
+         <span class="text-primary">Sign Up</span>
+      </h3>
+
+
+      {% if form.errors %}
+      <div class="alert alert-danger">
+         {{ form.errors }}
+      </div>
+      {% endif %}
+
+
+      <div class="row">
+         <div class="col-6 ">
+            <label class="form-label" ><b>First name</b></label>
+            {{ form.first_name }}
+         </div>
+         <div class="col-6 ">
+            <label class="form-label" ><b>Last name</b></label>
+            {{ form.last_name }}
+         </div>
+      </div>
+
+
+      <div class="form-outline mt-2">
+         <label class="form-label" ><b>Username</b></label>
+         {{ form.username }}
+         <p>
+            Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+         </p>
+      </div>
+
+
+      <div class="form-outline mt-2">
+         <label class="form-label" ><b>Email</b></label>
+         {{ form.email }}
+      </div>
+
+
+      <div class="row mt-2">
+         <div class="col-6 ">
+            <label class="form-label" ><b>Password</b></label>
+            {{ form.password1 }}
+         </div>
+         <div class="col-6 ">
+            <label class="form-label"><b>Password Confirmation</b></label>
+            {{ form.password2 }}
+         </div>
+         <ul class="ms-4">
+            <li>Your password can’t be too similar to your other personal information.</li>
+            <li>Your password must contain at least 8 characters.</li>
+            <li>Your password can’t be a commonly used password.</li>
+            <li>Your password can’t be entirely numeric.</li>
+         </ul>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block ">Sign up</button>
+      <p class="mt-1">Already signed up? <a class="custom-link" href="/accounts/login"> Go to login</a></p>
+
+   </form>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'task/base.html' %}
+{% block start %}
+<main class="content px-3 py-2">
+   <div class="card">
+      <h4 class="fw-bold ls-tight card-header">
+      <i class="fas fa-edit text-primary"></i> Update Task </h4>
+      <div class="mt-4 px-5">
+         <form method="POST" >
+            {% csrf_token %}
+            <div class="row mb-2">
+               <div class="col-lg-6 col-md-12">
+                  <strong >{{update_form.title.label}}</strong> 
+                  {{ update_form.title }}
+               </div>
+               <div class="col-lg-6 col-md-12 mt-2">
+                  <label class="fw-bold">Created by : </label>
+                  <img src="/media/{{task.created_by.profile_picture}}" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{task.created_by.user.first_name}}+{{task.created_by.user.last_name}}&size=200&background=random'" class="rounded-circle ms-2" style="width: 60px; height: auto;">
+                  <span class="">{{task.created_by.user.first_name}} {{task.created_by.user.last_name}}</span>
+               </div>
+            </div>
+            <div class="row mb-3">
+               <div class="col-sm">
+                  <strong>{{update_form.description.label}}</strong>
+                  {{ update_form.description }}
+               </div>
+            </div>
+            <div class="row g-3 mb-3">
+               <div class="col-sm">
+                  <label for="taskPriority" class="col-form-label fw-bold">Priority</label>
+                  {{ update_form.priority }}
+               </div>
+               <div class="col-sm">
+                  <label for="taskStatus" class="col-form-label fw-bold">Status</label>
+                  {{ update_form.status }}
+               </div>
+               <div class="col-sm">
+                  <label for="taskDueDate" class="col-form-label fw-bold">Due Date</label>
+                  {{ update_form.due_date }}
+               </div>
+               <div class="col-sm">
+                  <label for="taskDuedte" class="col-form-label fw-bold">Assign to</label>
+                  {{ update_form.assigned_to }}
+               </div>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-end mb-4 mt-4 ">
+               <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+         </form>
+      </div>
+   </div>
+</main>
+{% endblock %}

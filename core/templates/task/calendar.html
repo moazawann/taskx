@@ -1,0 +1,67 @@
+{% extends 'task/base.html' %}
+{% load static %}
+
+{% block start %}
+
+
+<main class="content px-3 py-2" style="color: rgb(202, 18, 18);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Adjust the height of the calendar container -->
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                height: 600,
+                initialView: 'dayGridMonth',
+                fixedWeekCount: false,
+                events: [
+                    
+                    {% for task in tasks %}
+                    {
+                        title: '{{ task.title }}',
+                        date: '{{ task.due_date|date:"Y-m-d" }}',
+                        url: '{% url "task_details" task.id %}',
+
+                         {% if task.priority == 1 %}
+
+                             backgroundColor: 'rgb(202, 17, 17)',
+                             borderColor: 'rgb(202, 17, 17)',
+
+                         {% elif task.priority == 2 %}
+
+                             backgroundColor: '#FFBF00',
+                             borderColor: '#FFBF00',
+
+                        {% elif task.priority == 3 %}
+
+                            backgroundColor: 'rgb(60, 143, 28)',
+                            borderColor: 'rgb(60, 143, 28)',
+
+
+
+                         {% endif %}
+                        
+
+                    },
+                    {% endfor %}
+                ],
+                
+            });
+            calendar.render();
+        });
+    </script>
+</main>
+
+{% endblock %}

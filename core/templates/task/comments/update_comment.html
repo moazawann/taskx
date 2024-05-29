@@ -1,0 +1,26 @@
+<!-- Update comment modal -->
+
+<div class="modal fade" id="upcommentModal{{comment.id}}" tabindex="-1" aria-labelledby="upcommentModalLabel{{comment.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="upcommentModalLabel{{comment.id}}">Update Comment</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        
+        <div class="modal-body">
+
+            <form method="post" action="{% url 'update_comment' task.id comment.id %}">
+                {% csrf_token %}
+                   <textarea class="form-control" name="update_comment" id="" placeholder="Add Comment" required rows="4">{{comment.comment}}</textarea>
+                   
+                <div class="d-flex justify-content-end my-2">
+                   <button type="button" class="btn btn-secondary ms-2" data-bs-dismiss="modal">Close</button>
+                   <button type="submit" class="btn btn-primary ms-2" data-bs-dismiss="modal">Update</button>
+                </div>
+            </form>
+
+        </div>
+      </div>
+    </div>
+  </div>

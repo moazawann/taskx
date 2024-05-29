@@ -1,0 +1,166 @@
+{% extends 'task/base.html' %}
+{% block start %}
+<main class="content ">
+   <div class="card mx-2 my-1" style="border-radius: 15px;">
+
+      <div class="mx-4 mt-2" style="display: flex; justify-content: space-between; align-items: center;">
+         <h4 class="fw-bold ls-tight p-1 ">{{ task.title }}</h4>
+         
+
+         <div class="d-flex me-2">
+             <button type="button" class="custom-btn me-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{task.id}}">
+                 <i class="fas fa-trash-alt fa-lg text-danger"></i>
+             </button>
+     
+             {% include "task/deletetask.html" %}
+     
+             <a class="custom-btn me-2" href="{% url 'update_task' task.id %}"><i class="fas fa-edit fa-lg text-primary"></i></a>
+     
+             <button class="btn custom-btn me-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                 <i class="fa-solid fa-lg fa-ellipsis"></i>
+             </button>
+
+             {% if is_favourites %}
+             <ul class="dropdown-menu">
+                 <li><a class="custom-btn m-2" href="/removefavourite/{{task.id}}">Remove from Favourites</a></li>
+             </ul>
+             {% else %}
+             <ul class="dropdown-menu">
+                 <li><a class="custom-btn" href="/makefavourite/{{task.id}}">Add to Favourites</a></li>
+             </ul>
+              {% endif %}
+         </div>
+     </div>
+
+     <hr class="mx-4" style="margin-top: 0% ; margin-bottom: 0%;">
+     
+
+
+      <div class="mt-2 px-3">
+
+      <div style="font-size: 0.9rem;">
+
+         <div class="row m-2">
+
+            <div class="col-lg-6 col-md-6 col-sm-12">
+               <div class="row">
+                  <div class="col-4 ms-2 mb-2 text-secondary">
+                     <span><i class="fa-solid fa-spinner"></i> Status </span>
+                  </div>
+                  <div class="col-5 ms-2  mb-2">
+                     <div class="badge {% if task.get_status_label == 'Completed' %} bg-success {% else %} bg-danger {% endif %}" style="font-size: 0.8rem;">
+
+                        <span>{{task.get_status_label}}</span>
+
+                    </div> 
+                  </div>
+                  <div class="col-4 ms-2 my-2 text-secondary">
+                     <span><i class="fa-solid fa-thumbtack"></i> Priority</span>
+                  </div>
+                  <div class="col-5 ms-2 my-2">
+                     <div class="badge {% if task.get_priority_label == 'High' %} bg-danger {% elif task.get_priority_label == 'Medium' %} bg-warning {% else %} bg-success {% endif %}" style="font-size: 0.8rem;">
+
+                        {{task.get_priority_label}}
+
+                       </div> 
+                  </div>
+
+                  <div class="col-4 ms-2 my-2 text-secondary" >
+                     <span><i class="fa-regular fa-calendar"></i> Due Date </span>
+                  </div>
+                  <div class="col-5 ms-2 my-2" >
+                     <div >
+                        <span class="text-center p-1" style="border-radius: 7px; border: 1px solid rgb(108, 8, 240);">{{ task.due_date }}</span>
+
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 ">
+               
+               <div class="row text-secondary">
+
+                  <div class="col-11 mt-1" >
+                     <span class="ms-1 me-4 "><i class="fa-regular fa-user "></i> Assigned to </span>
+                     <img src="/media/{{task.assigned_to.profile_picture}}" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{task.assigned_to.user.first_name}}+{{task.assigned_to.user.last_name}}&size=200&background=random'" class="rounded-circle me-1" style="width: 50px; height: 50px;">
+                     <span class="text-dark">{{task.assigned_to.user.first_name}} {{task.assigned_to.user.last_name}}</span>
+                  </div>
+
+
+                  <div class="col-11 py-2 mt-1">
+                     <span class="ms-1 me-4"><i class="fa-regular fa-user"></i> Created by </span>
+                     <img src="/media/{{task.created_by.profile_picture}}" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{task.created_by.user.first_name}}+{{task.created_by.user.last_name}}&size=200&background=random'" class="rounded-circle ms-1 me-1" style="width: 50px; height: 50px;">
+                                
+                     <span class="text-dark">{{task.created_by.user.first_name}} {{task.created_by.user.last_name}}</span>
+                  </div>
+
+            </div>
+         </div>
+      </div>
+
+
+
+
+         <h6 class="fw-bold mt-2">Description: </h6>
+         <div class="ms-3 mt-2 me-3">
+            <div class="px-4 py-1" style="background-color: rgb(237, 237, 247); border-radius: 15px;">
+            <p>{{ task.description|linebreaks }}</p>
+            </div>
+         </div>
+         
+      </div>
+     
+      <div class=" mx-3 mt-4 ">
+         
+         <form method="post">
+            {% csrf_token %}
+            <div class="mx-3 mt-3 mb-1 " >
+               <textarea class="form-control" name="comment" id="" placeholder="Add Comment" required style="border-radius: 15px;"></textarea>
+            </div>
+
+            <div class=" d-flex justify-content-end me-3 mt-2 mb-2">
+               <button class="btn btn-primary btn-sm" type="submit">Add</button>
+            </div>
+         </form>
+
+
+         {% if comments %}
+         <h6 class="ms-3 my-2 mb-1 fw-bold">Comments : </h6>
+           
+            {% for comment in comments%}
+            <div class="mt-1 mx-4 border mb-2" style="border-radius: 20px; background-color: #e6e3dd;" >
+               <div class="p-2">
+                 <div class="d-flex flex-start">
+                    <img src="/media/{{comment.profile_id.profile_picture}}" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name={{comment.profile_id.user.first_name}}+{{comment.profile_id.user.last_name}}&size=200&background=random'" class="rounded-circle" style="width: 36px; height:36px ;">
+                   <div class="w-100">
+
+                     <div class="d-flex justify-content-between align-items-center">
+                       <h6 class="text-primary my-2 ms-2">
+                        <strong> {{comment.profile_id.user.first_name}} {{comment.profile_id.user.last_name}} :</strong>
+                         <span class="custom-text text-dark ms-2 ">{{comment.comment}}</span>
+                       </h6>
+                     </div>
+
+                     {% if comment.created_by.user.id == request.user.id %}
+
+                     <div class="d-flex justify-content-end align-items-center">
+                          <a  class="text-danger ms-2" data-bs-toggle="modal" data-bs-target="#dcommentModal{{comment.id}}"><i class="fas fa-trash-alt fa-lg"></i></a> 
+                          <a  class="text-primary ms-2 me-2" data-bs-toggle="modal" data-bs-target="#upcommentModal{{comment.id}}"><i class="fas fa-edit fa-lg"></i></a> 
+                          {% include "task/comments/delete_comment.html"%}
+                          {% include "task/comments/update_comment.html"%}
+                     </div>
+                   {% endif %}
+                  </div>
+                 </div>
+               </div>
+             </div>
+             {% endfor %}
+             {% endif %}
+   
+      </div>
+   </div>
+
+</main>
+{% endblock %}
