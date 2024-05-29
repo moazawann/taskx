@@ -44,7 +44,7 @@ Follow these steps to set up and run the project locally:
 
 #### 1. Clone git repository or Download the zip file
 ```bash
-git clone "https://github.com/Manisha-Bayya/simple-django-project.git"
+git clone "https://github.com/moazawann/taskx.git"
 
 #change directory(ignore if you downloaded the zip)
 cd taskx
