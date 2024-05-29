@@ -40,7 +40,11 @@ Follow these steps to set up and run the project locally:
 - Python 3.10
 - MYSQL 8.0
 
-### Installation
+### Direct Access
+- I have deployed TaskX on AWS EC2 , you can acces it using the folowing link:
+ http://m.spacenex.online:8000
+
+### Local Installation
 
 #### 1. Clone git repository or Download the zip file
 ```bash
