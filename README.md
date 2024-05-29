@@ -75,12 +75,13 @@ pip install -r requirements.txt
 
 #### 4. Project Structure
 ```bash
-core/
 ├── accounts/
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
+│   ├── forms.py
 │   ├── models.py
+│   ├── signals.py
 │   ├── tests.py
 │   ├── urls.py
 │   └── views.py
@@ -96,9 +97,13 @@ core/
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
+│   ├── context_processors.py 
+│   ├── forms.py
 │   ├── models.py
+│   ├── signals.py
 │   ├── tests.py
 │   ├── urls.py
+│   ├── utils.py  
 │   └── views.py
 ├── templates/
 │   ├── accounts/
